@@ -51,6 +51,18 @@
         msg: "Nginx esta ativo no servidor {{ inventory_hostname }}"
       when: nginx_status.stdout == "active"
 
+    - name: Criar diretorios do laboratorio
+      ansible.builtin.file:
+        path: "/opt/devops-lab/{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      loop:
+        - scripts
+        - backups
+        - logs
+
   handlers:
     - name: Validar configuracao do Nginx
       ansible.builtin.command:
