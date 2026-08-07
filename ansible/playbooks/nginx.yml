@@ -14,3 +14,13 @@
         name: nginx
         state: started
         enabled: true
+
+    - name: Publicar pagina do laboratorio
+      ansible.builtin.copy:
+        content: |
+          <h1>Laboratorio DevOps - Diego</h1>
+          <p>Servidor configurado com Ansible.</p>
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
