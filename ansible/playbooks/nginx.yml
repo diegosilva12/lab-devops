@@ -2,6 +2,10 @@
   hosts: app
   become: true
 
+  vars:
+    titulo: "Laboratorio DevOps - Diego"
+    mensagem: "Servidor configurado com Ansible e Jinja2."
+
   tasks:
     - name: Garantir que o Nginx esteja instalado
       ansible.builtin.apt:
@@ -16,10 +20,8 @@
         enabled: true
 
     - name: Publicar pagina do laboratorio
-      ansible.builtin.copy:
-        content: |
-          <h1>Laboratorio DevOps - Diego</h1>
-          <p>Servidor configurado com Ansible.</p>
+      ansible.builtin.template:
+        src: ../templates/index.html.j2
         dest: /var/www/html/index.html
         owner: root
         group: root
