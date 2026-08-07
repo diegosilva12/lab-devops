@@ -1,0 +1,16 @@
+- name: Configurar servidor web
+  hosts: app
+  become: true
+
+  tasks:
+    - name: Garantir que o Nginx esteja instalado
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Garantir que o Nginx esteja iniciado e habilitado
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
