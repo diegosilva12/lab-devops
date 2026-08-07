@@ -40,6 +40,17 @@
         - Validar configuracao do Nginx
         - Recarregar Nginx
 
+    - name: Verificar status do Nginx
+      ansible.builtin.command:
+        cmd: systemctl is-active nginx
+      register: nginx_status
+      changed_when: false
+
+    - name: Informar que o Nginx esta ativo
+      ansible.builtin.debug:
+        msg: "Nginx esta ativo no servidor {{ inventory_hostname }}"
+      when: nginx_status.stdout == "active"
+
   handlers:
     - name: Validar configuracao do Nginx
       ansible.builtin.command:
