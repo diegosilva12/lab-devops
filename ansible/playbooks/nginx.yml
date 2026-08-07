@@ -26,3 +26,27 @@
         owner: root
         group: root
         mode: '0644'
+
+    - name: Configurar identificacao do laboratorio no Nginx
+      ansible.builtin.copy:
+        content: |
+          # Managed by Ansible - DevOps Lab
+          add_header X-Lab-Environment "devops-lab" always;
+        dest: /etc/nginx/conf.d/lab.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Validar configuracao do Nginx
+        - Recarregar Nginx
+
+  handlers:
+    - name: Validar configuracao do Nginx
+      ansible.builtin.command:
+        cmd: nginx -t
+      changed_when: false
+
+    - name: Recarregar Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
