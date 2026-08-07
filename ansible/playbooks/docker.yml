@@ -1,0 +1,59 @@
+---
+- name: Gerenciar stack Docker
+  hosts: app
+  become: true
+
+  tasks:
+    - name: Garantir diretorios da stack
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      loop:
+        - /opt/devops-lab/nginx
+        - /opt/devops-lab/nginx/html
+
+    - name: Copiar arquivo Docker Compose
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../docker/nginx/compose.yaml"
+        dest: /opt/devops-lab/nginx/compose.yaml
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Copiar pagina HTML
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../../docker/nginx/html/index.html"
+        dest: /opt/devops-lab/nginx/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Aplicar stack Docker Compose
+      community.docker.docker_compose_v2:
+        project_src: /opt/devops-lab/nginx
+        state: present
+
+    - name: Validar servico web
+      ansible.builtin.uri:
+        url: http://127.0.0.1:8080
+        status_code: 200
+      register: web_check
+      changed_when: false
+
+    - name: Validar Redis
+      community.docker.docker_compose_v2_exec:
+        project_src: /opt/devops-lab/nginx
+        service: redis
+        command: redis-cli ping
+      register: redis_check
+      changed_when: false
+      failed_when: redis_check.stdout | trim != "PONG"
+
+    - name: Exibir status da stack
+      ansible.builtin.debug:
+        msg:
+          - "Web HTTP status: {{ web_check.status }}"
+          - "Redis: {{ redis_check.stdout | trim }}"
