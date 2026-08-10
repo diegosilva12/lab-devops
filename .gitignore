@@ -13,4 +13,4 @@ crash.log
 crash.*.log
 
 # Recurso gerado pelo primeiro laboratório
-arquivo-criado-pelo-terraform.txt
+arquivo-*.txt

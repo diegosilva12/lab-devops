@@ -11,7 +11,7 @@ provider "local" {
 }
 
 resource "local_file" "anotacao_lab" {
-  filename = "${path.module}/arquivo-criado-pelo-terraform.txt"
+  filename = "${path.module}/arquivo-${terraform.workspace}-${var.server_name}.txt"
 
   content = <<-EOT
   Primeiro laboratório com Terraform.
