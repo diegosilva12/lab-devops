@@ -16,7 +16,7 @@ resource "local_file" "anotacao_lab" {
   content = <<-EOT
   Primeiro laboratório com Terraform.
   Arquivo criado automaticamente.
-  Servidor: srv-control
+  Servidor: ${var.server_name}
   Status: gerenciado pelo Terraform.
   EOT
 }
