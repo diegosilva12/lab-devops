@@ -14,3 +14,4 @@ crash.*.log
 
 # Recurso gerado pelo primeiro laboratório
 arquivo-*.txt
+servidor-*.txt
