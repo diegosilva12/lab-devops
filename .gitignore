@@ -1,0 +1,16 @@
+# Diretórios baixados pelo Terraform
+**/.terraform/*
+
+# Arquivos de estado
+*.tfstate
+*.tfstate.*
+
+# Planos salvos
+*.tfplan
+
+# Logs de falha
+crash.log
+crash.*.log
+
+# Recurso gerado pelo primeiro laboratório
+arquivo-criado-pelo-terraform.txt
