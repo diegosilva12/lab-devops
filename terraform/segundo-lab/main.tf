@@ -13,7 +13,8 @@ provider "local" {
 resource "local_file" "servidores" {
   for_each = var.servidores
 
-  filename = "${path.module}/servidor-${each.key}.txt"
+  filename        = "${path.module}/servidor-${each.value.ambiente}-${each.key}.txt"
+  file_permission = "0644"
 
   content = <<-EOT
   Nome: ${each.key}
