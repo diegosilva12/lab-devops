@@ -58,3 +58,6 @@ module "redis" {
     "ping"
   ]
 }
+resource "docker_volume" "imported_demo" {
+  name = "terraform-import-demo"
+}
