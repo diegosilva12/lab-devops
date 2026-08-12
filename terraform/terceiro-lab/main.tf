@@ -10,30 +10,13 @@ terraform {
 provider "docker" {
   host = var.docker_host
 }
-locals {
-  nginx_environments = {
-    principal = {
-      container_name = "terraform-nginx"
-      external_port  = var.nginx_external_port
-    }
-
-    homologacao = {
-      container_name = "terraform-nginx-homologacao"
-      external_port  = 8082
-    }
-    desenvolvimento = {
-      container_name = "terraform-nginx-desenvolvimento"
-      external_port  = 8083
-    }
-  }
-}
 resource "docker_network" "lab" {
   name = "terraform-network"
 }
 
 module "nginx" {
   source   = "./modules/container"
-  for_each = local.nginx_environments
+  for_each = var.nginx_environments
 
   container_name = each.value.container_name
   image_name     = "nginx:alpine"

@@ -1,6 +1,6 @@
-output "nginx_external_port" {
-  description = "Porta utilizada para acessar o Nginx"
-  value       = var.nginx_external_port
+output "nginx_principal_port" {
+  description = "Porta do ambiente Nginx principal"
+  value       = var.nginx_environments["principal"].external_port
 }
 
 output "docker_network_name" {
@@ -23,7 +23,7 @@ output "managed_containers" {
 output "nginx_urls" {
   description = "Endereços dos ambientes Nginx"
   value = {
-    for name, environment in local.nginx_environments :
+    for name, environment in var.nginx_environments :
     name => "http://192.168.56.20:${environment.external_port}"
   }
 }

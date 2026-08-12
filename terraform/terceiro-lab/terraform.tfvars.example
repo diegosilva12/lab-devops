@@ -1,2 +1,17 @@
 docker_host         = "ssh://usuario@IP_DO_SERVIDOR:22"
-nginx_external_port = 8081
+nginx_environments = {
+  principal = {
+    container_name = "terraform-nginx"
+    external_port  = 8081
+  }
+
+  homologacao = {
+    container_name = "terraform-nginx-homologacao"
+    external_port  = 8082
+  }
+
+  desenvolvimento = {
+    container_name = "terraform-nginx-desenvolvimento"
+    external_port  = 8083
+  }
+}
