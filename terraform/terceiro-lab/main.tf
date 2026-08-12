@@ -16,11 +16,12 @@ resource "docker_network" "lab" {
 }
 
 module "nginx" {
-  source = "./modules/nginx"
+  source = "./modules/container"
 
   container_name = "terraform-nginx"
   image_name     = "nginx:alpine"
   network_name   = docker_network.lab.name
+  internal_port  = 80
   external_port  = var.nginx_external_port
 }
 
@@ -32,22 +33,12 @@ resource "docker_volume" "redis_data" {
   }
 }
 
-resource "docker_image" "redis" {
-  name         = "redis:alpine"
-  keep_locally = true
-}
+module "redis" {
+  source = "./modules/container"
 
-resource "docker_container" "redis" {
-  name  = "terraform-redis"
-  image = docker_image.redis.image_id
-
-  restart = "unless-stopped"
-
-  networks_advanced {
-    name = docker_network.lab.name
-  }
-  volumes {
-    volume_name    = docker_volume.redis_data.name
-    container_path = "/data"
-  }
+  container_name = "terraform-redis"
+  image_name     = "redis:alpine"
+  network_name   = docker_network.lab.name
+  volume_name    = docker_volume.redis_data.name
+  volume_path    = "/data"
 }
