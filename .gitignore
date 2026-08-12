@@ -15,3 +15,9 @@ crash.*.log
 # Recurso gerado pelo primeiro laboratório
 arquivo-*.txt
 servidor-*.txt
+
+# Arquivos com valores locais ou sensíveis
+*.tfvars
+
+# Permitir arquivos de exemplo
+!*.tfvars.example

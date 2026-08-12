@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "docker" {
-  host = "ssh://diego@192.168.56.20:22"
+  host = var.docker_host
 }
 
 resource "docker_network" "lab" {
@@ -32,12 +32,16 @@ resource "docker_container" "nginx" {
 
   ports {
     internal = 80
-    external = 8081
+    external = var.nginx_external_port
   }
 }
 
 resource "docker_volume" "redis_data" {
   name = "terraform-redis-data"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "docker_image" "redis" {
