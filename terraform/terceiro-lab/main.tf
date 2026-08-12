@@ -25,6 +25,16 @@ module "nginx" {
   external_port  = var.nginx_external_port
 }
 
+module "nginx_homologacao" {
+  source = "./modules/container"
+
+  container_name = "terraform-nginx-homologacao"
+  image_name     = "nginx:alpine"
+  network_name   = docker_network.lab.name
+  internal_port  = 80
+  external_port  = 8082
+}
+
 resource "docker_volume" "redis_data" {
   name = "terraform-redis-data"
 

@@ -17,6 +17,14 @@ output "managed_containers" {
   description = "Containers administrados pelo Terraform"
   value = [
     module.nginx.container_name,
+    module.nginx_homologacao.container_name,
     module.redis.container_name
   ]
+}
+output "nginx_urls" {
+  description = "Endereços dos ambientes Nginx"
+  value = {
+    principal   = "http://192.168.56.20:${var.nginx_external_port}"
+    homologacao = "http://192.168.56.20:8082"
+  }
 }
