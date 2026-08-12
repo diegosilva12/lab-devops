@@ -15,25 +15,13 @@ resource "docker_network" "lab" {
   name = "terraform-network"
 }
 
-resource "docker_image" "nginx" {
-  name         = "nginx:alpine"
-  keep_locally = true
-}
+module "nginx" {
+  source = "./modules/nginx"
 
-resource "docker_container" "nginx" {
-  name  = "terraform-nginx"
-  image = docker_image.nginx.image_id
-
-  networks_advanced {
-    name = docker_network.lab.name
-  }
-
-  restart = "unless-stopped"
-
-  ports {
-    internal = 80
-    external = var.nginx_external_port
-  }
+  container_name = "terraform-nginx"
+  image_name     = "nginx:alpine"
+  network_name   = docker_network.lab.name
+  external_port  = var.nginx_external_port
 }
 
 resource "docker_volume" "redis_data" {

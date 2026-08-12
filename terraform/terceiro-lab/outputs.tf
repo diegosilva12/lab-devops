@@ -16,7 +16,7 @@ output "redis_volume_name" {
 output "managed_containers" {
   description = "Containers administrados pelo Terraform"
   value = [
-    docker_container.nginx.name,
+    module.nginx.container_name,
     docker_container.redis.name
   ]
 }
