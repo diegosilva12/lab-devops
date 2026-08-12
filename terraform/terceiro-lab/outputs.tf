@@ -15,16 +15,15 @@ output "redis_volume_name" {
 
 output "managed_containers" {
   description = "Containers administrados pelo Terraform"
-  value = [
-    module.nginx.container_name,
-    module.nginx_homologacao.container_name,
-    module.redis.container_name
-  ]
+  value = concat(
+    [for environment in module.nginx : environment.container_name],
+    [module.redis.container_name]
+  )
 }
 output "nginx_urls" {
   description = "Endereços dos ambientes Nginx"
   value = {
-    principal   = "http://192.168.56.20:${var.nginx_external_port}"
-    homologacao = "http://192.168.56.20:8082"
+    for name, environment in local.nginx_environments :
+    name => "http://192.168.56.20:${environment.external_port}"
   }
 }

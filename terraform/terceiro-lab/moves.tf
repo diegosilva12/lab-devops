@@ -16,3 +16,12 @@ moved {
   from = docker_container.redis
   to   = module.redis.docker_container.this
 }
+moved {
+  from = module.nginx
+  to   = module.nginx["principal"]
+}
+
+moved {
+  from = module.nginx_homologacao
+  to   = module.nginx["homologacao"]
+}
