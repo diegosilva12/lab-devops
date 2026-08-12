@@ -21,6 +21,17 @@ resource "docker_container" "this" {
 
   restart = var.restart_policy
 
+  dynamic "healthcheck" {
+    for_each = length(var.healthcheck_test) > 0 ? [1] : []
+
+    content {
+      test     = var.healthcheck_test
+      interval = var.healthcheck_interval
+      timeout  = var.healthcheck_timeout
+      retries  = var.healthcheck_retries
+    }
+  }
+
   dynamic "ports" {
     for_each = var.external_port != null && var.internal_port != null ? [1] : []
 

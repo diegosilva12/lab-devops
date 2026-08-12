@@ -23,6 +23,16 @@ module "nginx" {
   network_name   = docker_network.lab.name
   internal_port  = 80
   external_port  = each.value.external_port
+
+  healthcheck_test = [
+    "CMD",
+    "wget",
+    "--quiet",
+    "--tries=1",
+    "--spider",
+    "http://localhost/"
+  ]
+
 }
 
 resource "docker_volume" "redis_data" {
@@ -41,4 +51,10 @@ module "redis" {
   network_name   = docker_network.lab.name
   volume_name    = docker_volume.redis_data.name
   volume_path    = "/data"
+
+  healthcheck_test = [
+    "CMD",
+    "redis-cli",
+    "ping"
+  ]
 }

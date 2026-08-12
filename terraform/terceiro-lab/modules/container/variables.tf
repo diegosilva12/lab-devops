@@ -42,3 +42,26 @@ variable "restart_policy" {
   type        = string
   default     = "unless-stopped"
 }
+variable "healthcheck_test" {
+  description = "Comando usado para verificar a saúde do container"
+  type        = list(string)
+  default     = []
+}
+
+variable "healthcheck_interval" {
+  description = "Intervalo entre as verificações"
+  type        = string
+  default     = "30s"
+}
+
+variable "healthcheck_timeout" {
+  description = "Tempo máximo de cada verificação"
+  type        = string
+  default     = "5s"
+}
+
+variable "healthcheck_retries" {
+  description = "Quantidade de falhas antes de marcar como unhealthy"
+  type        = number
+  default     = 3
+}
