@@ -42,6 +42,8 @@ module "app" {
   internal_port  = 80
   external_port  = 8091
 
+  healthcheck_interval = "15s"
+
   healthcheck_test = [
     "CMD",
     "wget",
