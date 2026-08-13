@@ -41,6 +41,17 @@ variable "restart_policy" {
   description = "Política de reinicialização do container"
   type        = string
   default     = "unless-stopped"
+
+  validation {
+    condition = contains([
+      "no",
+      "on-failure",
+      "always",
+      "unless-stopped",
+    ], var.restart_policy)
+
+    error_message = "restart_policy deve ser no, on-failure, always ou unless-stopped."
+  }
 }
 variable "healthcheck_test" {
   description = "Comando usado para verificar a saúde do container"
