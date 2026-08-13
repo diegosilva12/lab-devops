@@ -1,0 +1,1 @@
+docker_host = "ssh://usuario@IP_DO_SERVIDOR:22"
