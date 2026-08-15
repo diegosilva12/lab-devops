@@ -51,3 +51,5 @@ module "app" {
     "http://localhost/",
   ]
 }
+
+# Aleteração válida para confirmar a execução da Terraform CI
