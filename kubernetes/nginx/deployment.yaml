@@ -21,6 +21,27 @@ spec:
           ports:
             - name: http
               containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          volumeMounts:
+            - name: nginx-html
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+              readOnly: true
           resources:
             requests:
               cpu: 50m
@@ -28,3 +49,7 @@ spec:
             limits:
               cpu: 200m
               memory: 128Mi
+      volumes:
+        - name: nginx-html
+          configMap:
+            name: nginx-html

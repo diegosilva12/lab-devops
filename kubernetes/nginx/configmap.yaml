@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-html
+  namespace: lab-devops
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+      <head>
+        <meta charset="UTF-8">
+        <title>Laboratório Kubernetes</title>
+      </head>
+      <body>
+        <h1>Laboratório Kubernetes do Diego</h1>
+        <p>Aplicação Nginx executada em um cluster K3s.</p>
+        <p>Conteúdo fornecido por um ConfigMap.</p>
+      </body>
+    </html>
