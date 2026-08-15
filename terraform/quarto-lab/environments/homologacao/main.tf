@@ -51,3 +51,6 @@ module "app" {
     "http://localhost/",
   ]
 }
+
+# ERRO CONTROLADO PARA TESTAR A CI
+recurso_invalido = 
